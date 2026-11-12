@@ -6,14 +6,14 @@ Someone wanted an AI to merge two PDF files. They didn't need one: their laptop 
 
 AlreadyThere is a prompt that teaches any AI chat to work this way:
 
-1. **Understand the job.** What goes in, what comes out, how often.
-2. **Check what's already there.** One read-only command lists the tools and apps on your computer. You read it before you run it.
-3. **Show the options.** Built-in first, then apps you already have, installs only as a last resort.
-4. **Write one small script.** Plain comments, never touches your originals. For repeat jobs: drop files in `inbox/`, run one command, results in `done/`, a `report.md` of what happened.
-5. **Teach while it goes.** You predict what the key line does before it runs, and you leave knowing one idea you can reuse.
+1. **Understand the problem together.** Your task becomes a short list of steps, each marked **rule** (a script can do it, same result every time) or **judgement** (someone has to look). This is usually where the problem gets clear.
+2. **Check what's already there.** One read-only command lists the tools and apps on your computer. You read it before you run it, and you hear what else those tools could do for you.
+3. **Show the options, you choose.** Built-in first, then apps you already have, installs only as a last resort. The AI recommends; you decide.
+4. **Agree the plan, then write one small script.** The plan in plain sentences first, your decisions in it, then the code. It never touches your originals. For repeat jobs: drop files in `inbox/`, run one command, results in `done/`, a `report.md` of what happened.
+5. **Teach while it goes.** You guess what the key line does before it runs, you learn which line to edit yourself, and you leave with one idea to reuse.
 6. **Fix together.** Paste the error, understand it, change one thing.
 
-The point is that you get the script *and* the understanding. You stay in charge; the AI helps you think.
+The AI is for building it, not for running it. You get the script *and* the understanding; your files stay on your computer; you make the decisions.
 
 ## Use it
 
