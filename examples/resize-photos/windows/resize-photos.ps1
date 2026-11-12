@@ -11,9 +11,9 @@ New-Item -ItemType Directory -Force inbox, done | Out-Null
 Add-Type -AssemblyName System.Drawing
 
 $stamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
-$originals = New-Item -ItemType Directory -Force "done\originals-$stamp"
+$originals = "done\originals-$stamp"
 $count = 0
-$lines = @("## $stamp", '')
+$lines = @()   # report lines for this run, written at the end
 
 foreach ($f in Get-ChildItem inbox -File) {
     $out = Join-Path 'done' ($f.BaseName + '.jpg')
@@ -50,12 +50,13 @@ foreach ($f in Get-ChildItem inbox -File) {
     $g.Dispose(); $canvas.Dispose(); $img.Dispose()
 
     $lines += "- $($f.Name) -> $(Split-Path $out -Leaf), ${w}x${h}"
+    New-Item -ItemType Directory -Force $originals | Out-Null
     Move-Item $f.FullName $originals
     $count++
 }
 
-$lines += ''
-Add-Content report.md $lines
+# Add this run to the report, if anything happened.
+if ($lines.Count -gt 0) { Add-Content report.md (@("## $stamp", '') + $lines + '') }
 if ($count -eq 0) {
     Write-Host 'No photos resized. Put photos in the inbox folder, then run this again.'
     exit 1

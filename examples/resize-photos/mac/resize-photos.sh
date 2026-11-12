@@ -10,10 +10,8 @@ cd "$(dirname "$0")" || exit 1
 mkdir -p inbox done
 
 stamp=$(date +%Y-%m-%d_%H-%M-%S)
-mkdir -p "done/originals-$stamp"
 count=0
-echo "## $stamp" >> report.md
-echo >> report.md
+lines=""   # report lines for this run, written at the end
 
 for f in inbox/*; do
   [ -f "$f" ] || continue
@@ -34,15 +32,18 @@ for f in inbox/*; do
   if [ -n "$w" ] && sips "${resize[@]}" -s format jpeg "$f" --out "$out" >/dev/null 2>&1; then
     w=$(sips -g pixelWidth "$out" | awk '/pixelWidth/ && $2 ~ /^[0-9]+$/ {print $2}')
     h=$(sips -g pixelHeight "$out" | awk '/pixelHeight/ && $2 ~ /^[0-9]+$/ {print $2}')
-    echo "- $name → $(basename "$out"), ${w}×${h}" >> report.md
+    lines+="- $name → $(basename "$out"), ${w}×${h}"$'\n'
+    mkdir -p "done/originals-$stamp"
     mv "$f" "done/originals-$stamp/"
     count=$((count + 1))
   else
-    echo "- $name: skipped, not an image sips can read (left in inbox/)" >> report.md
+    lines+="- $name: skipped, not an image sips can read (left in inbox/)"$'\n'
   fi
 done
 
-echo >> report.md
+# Add this run to the report, if anything happened.
+[ -n "$lines" ] && printf '## %s\n\n%s\n' "$stamp" "$lines" >> report.md
+
 if [ "$count" -eq 0 ]; then
   echo "No photos resized. Put photos in the inbox folder, then run this again."
   exit 1

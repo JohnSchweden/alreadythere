@@ -10,6 +10,8 @@ mkdir -p inbox done
 JOIN="/System/Library/Automator/Combine PDF Pages.action/Contents/MacOS/join"
 
 # Collect the PDFs in inbox/, sorted by name (01-..., 02-... controls the order).
+# nocaseglob also matches .PDF, which many scanners write.
+shopt -s nocaseglob
 pdfs=()
 for f in inbox/*.pdf; do
   [ -e "$f" ] && pdfs+=("$f")
