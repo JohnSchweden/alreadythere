@@ -47,7 +47,25 @@ On a Mac it's a small app you save from Script Editor (it comes with every Mac).
 
 ## For developers
 
-- **As an agent skill** (Claude Code, Codex, Cursor and others that read `SKILL.md`): copy this folder into your skills folder, for example `~/.claude/skills/alreadythere/`. An agent with a terminal can do the steps itself; the prompt is written for a person in a plain chat.
+There are two versions of the same method:
+
+- [`PROMPT.md`](PROMPT.md) is for a person in a plain AI chat. The AI can't see the computer, so it asks, and the person never types a command.
+- [`SKILL.md`](SKILL.md) is for an agent with a terminal (Claude Code, Codex and others that read `SKILL.md`). The agent checks the installed tools itself, writes the script, tests it on copies and teaches you what it does.
+
+**Install the skill:**
+
+```sh
+# Claude Code
+git clone https://github.com/JohnSchweden/alreadythere ~/.claude/skills/alreadythere
+# Codex
+git clone https://github.com/JohnSchweden/alreadythere ~/.agents/skills/alreadythere
+```
+
+Then describe your chore. Claude Code picks the skill up from the task, or call it with `/alreadythere`; in Codex use `$alreadythere`.
+
+**No install:** tell the agent "Read https://github.com/JohnSchweden/alreadythere/blob/main/SKILL.md and follow it for this task:" and add your chore.
+
+
 - **Tested examples** in [examples/](examples/):
 
 | Task | Mac | Windows |
