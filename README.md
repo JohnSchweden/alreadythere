@@ -1,40 +1,61 @@
 # AlreadyThere
 
-**The tool you need is probably already on your laptop.**
+**Your computer can probably already do that chore. You just need someone to show you how.**
 
-Someone wanted an AI to merge two PDF files. They didn't need one: their laptop already had a PDF tool that could do it. A short script that called it merged the files within seconds, and with a small loop it now merges whatever lands in a folder and writes a report. It keeps working with no AI, no internet and no account.
+Someone wanted an AI to merge two PDF files. Their laptop could already do it. A small file that used what was there merged them in seconds, and now it merges whatever lands in a folder. No app, no subscription, no AI needed to run it.
 
-AlreadyThere is a prompt that teaches any AI chat to work this way:
+AlreadyThere is a set of instructions you paste into an AI chat. It turns the AI into a patient helper that:
 
-1. **Understand the problem together.** Your task becomes a short list of steps, each marked **rule** (a script can do it, same result every time) or **judgement** (someone has to look). This is usually where the problem gets clear.
-2. **Check what's already there.** One read-only command lists the tools and apps on your computer. You read it before you run it, and you hear what else those tools could do for you.
-3. **Show the options, you choose.** Built-in first, then apps you already have, installs only as a last resort. The AI recommends; you decide.
-4. **Agree the plan, then write one small script.** The plan in plain sentences first, your decisions in it, then the code. It never touches your originals. For repeat jobs: drop files in `inbox/`, run one command, results in `done/`, a `report.md` of what happened.
-5. **Teach while it goes.** You guess what the key line does before it runs, you learn which line to edit yourself, and you leave with one idea to reuse.
-6. **Fix together.** Paste the error, understand it, change one thing.
+- **asks about your chore** in plain words, until both of you understand it,
+- **looks for the simplest way with what you already have**: sometimes that's a few clicks in an app you know, sometimes one small file,
+- **builds that file with you**, and tells you exactly how to save it,
+- so from then on you **drop your files in a folder and double-click**. Every time, same result, no AI.
 
-The AI is for building it, not for running it. You get the script *and* the understanding; your files stay on your computer; you make the decisions.
+You never type commands. You don't need to know what a script is.
 
-## Use it
+## How to use it
 
-**Any AI chat (ChatGPT, Claude, Copilot, Gemini), nothing to install:** copy the contents of [PROMPT.md](PROMPT.md) into a new chat, then describe your task.
+1. Open [PROMPT.md](PROMPT.md), copy everything in it.
+2. Open the AI chat you already use (ChatGPT, Claude, Copilot, Gemini) and start a new chat.
+3. Paste it, and below it describe your chore in your own words. For example:
+   - "Every month I get 30 invoices as PDFs and rename each one by hand."
+   - "I need to shrink 200 holiday photos so I can email them."
+   - "I have to turn a folder of Word files into PDFs."
+4. Answer its questions. It will tell you what to click, or give you a file and the steps to save it.
+Your files stay on your computer. You don't upload them to the chat.
 
-**As an agent skill (Claude Code, Codex, Cursor and others that read `SKILL.md`):** copy this folder into your skills folder, for example `~/.claude/skills/alreadythere/`.
+## What you'll end up with
 
-## Examples
+For a chore you do again and again, a folder like this:
+
+```
+Merge PDFs/
+  Merge PDFs     ← double-click this
+  inbox/         ← drop your files here
+  done/          ← your results appear here
+```
+
+On a Mac it's a small app you save from Script Editor (it comes with every Mac). On Windows it's a file you save from Notepad. The AI walks you through it, step by step.
+
+## Good to know
+
+- **Work laptops:** you usually can't install anything, and that's fine: this uses what's already there. Some companies block double-click files on Windows; if that happens, it's a company setting, not your mistake.
+- **Tested so far:** the PDF merge on a Mac (macOS 27). Windows files are not tested yet.
+- **It won't guess.** If part of your chore needs a person to decide (is this photo good, which client is this), it says so and leaves that part to you.
+
+---
+
+## For developers
+
+- **As an agent skill** (Claude Code, Codex, Cursor and others that read `SKILL.md`): copy this folder into your skills folder, for example `~/.claude/skills/alreadythere/`. An agent with a terminal can do the steps itself; the prompt is written for a person in a plain chat.
+- **Tested examples** in [examples/](examples/):
 
 | Task | Mac | Windows |
 |---|---|---|
-| [Merge PDFs](examples/merge-pdfs/) | built-in, tested | no built-in tool; the check step looks for one you already have |
-| [Resize photos](examples/resize-photos/) | built-in, tested | built-in, not yet tested on Windows |
+| [Merge PDFs](examples/merge-pdfs/) | double-click app (AppleScript), tested; shell version, tested | Windows has no built-in PDF merger; Word can |
+| [Resize photos](examples/resize-photos/) | shell version, tested | PowerShell version, not yet tested on Windows |
 
-Mac scripts are tested on macOS 27 with a stripped-down environment (no Homebrew, no Python on the path) and call only tools that ship with macOS. Older macOS versions are not tested yet.
-
-## What tends to already be there
-
-- **Mac:** `osascript` (AppleScript and JavaScript with access to macOS frameworks like PDFKit), `sips` (images), `textutil` (Word, RTF, HTML, text), `cupsfilter` (to PDF), `mdls` (file details), `shortcuts`, Automator's PDF combiner.
-- **Windows:** PowerShell and .NET (images, files, zip, web requests, Excel and Word through Office if installed).
-- **Apps you already use** that run without a window: LibreOffice, VLC, GIMP, Inkscape, Microsoft Office.
+Mac scripts were tested on macOS 27 with no Homebrew and no Python on the path, using only tools that ship with macOS.
 
 ## License
 

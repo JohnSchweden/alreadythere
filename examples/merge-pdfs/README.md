@@ -2,7 +2,17 @@
 
 Drop PDFs into `inbox/`, run one command, get one merged PDF in `done/` and a line in `report.md` for every file.
 
-## Mac (tested)
+## Mac, double-click app (tested)
+
+No Terminal. Uses the PDF combiner macOS ships inside Automator.
+
+1. Make a folder, for example "Merge PDFs" on the Desktop.
+2. Open Script Editor (Applications › Utilities), New Document, paste [`mac/merge-pdfs.applescript`](mac/merge-pdfs.applescript).
+3. File › Export…, File Format: Application, save it into that folder as "Merge PDFs".
+4. Double-click it once: it creates `inbox/` and `done/`. Allow access to the folder if macOS asks.
+5. Drop PDFs into `inbox/` (name order sets the page order) and double-click again.
+
+## Mac, Terminal version (tested)
 
 Uses the PDF combiner macOS ships inside Automator, plus PDFKit through `osascript` to count pages. Nothing to install, no developer tools needed.
 
@@ -15,4 +25,4 @@ Your originals are never changed. They move to `done/originals-<date>/`.
 
 ## Windows
 
-Windows has no built-in PDF merger. This is exactly where step 2 of the prompt matters: the check often finds something already installed that can do it (Microsoft Word, LibreOffice, a PDF app with a command line). If nothing is there, the prompt says so plainly before suggesting a free tool to install.
+Windows has no built-in PDF merger. The prompt asks which apps you already use: Microsoft Word can open PDFs and save PDFs, and a double-click file can drive Word in the background, but Word converts a PDF into an editable document first, so the layout can shift. Fine for plain text letters, not for forms or statements with tables. If nothing you have can do it, the prompt says so plainly before suggesting a free tool to install. Not tested on Windows yet.
