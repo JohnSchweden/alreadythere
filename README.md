@@ -4,7 +4,7 @@
 
 Someone wanted an AI to merge two PDF files. Their laptop could already do it. A small file that used what was there merged them in seconds, and now it merges whatever lands in a folder. No app, no subscription, no AI needed to run it.
 
-AlreadyThere is a set of instructions you paste into an AI chat. It turns the AI into a patient helper that:
+AlreadyThere is an agent skill for Claude Code and Codex, plus a prompt for any AI chat. Either way it turns the AI into a patient helper that:
 
 - **asks about your chore** in plain words, until both of you understand it,
 - **looks for the simplest way with what you already have**: sometimes that's a few clicks in an app you know, sometimes one small file,
@@ -13,7 +13,37 @@ AlreadyThere is a set of instructions you paste into an AI chat. It turns the AI
 
 You never type commands. You don't need to know what a script is.
 
-## How to use it
+## Install the skill (Claude Code or Codex)
+
+One line, either tool:
+
+```sh
+npx skills add JohnSchweden/alreadythere -g -a claude-code -a codex
+```
+
+Leave out `-g` to install it into the project you're in (`.claude/skills/` and `.agents/skills/`) instead of for your user. Use only `-a claude-code` or only `-a codex` if you have one of them.
+
+Claude Code only, as a plugin (type it inside Claude Code):
+
+```
+/plugin install alreadythere --marketplace JohnSchweden/alreadythere
+```
+
+Then describe your chore. The agent picks the skill up from the task, or you call it: `/alreadythere` in Claude Code (`/alreadythere:alreadythere` with the plugin install), `$alreadythere` in Codex.
+
+### Skill or prompt?
+
+Same method, different reach. The skill is for an agent that can run commands on your computer; the prompt is for a chat that can't.
+
+| | Skill (Claude Code, Codex) | Prompt (any AI chat) |
+|---|---|---|
+| What's on your computer | the agent checks it itself, read-only | the AI asks you which apps you use |
+| The script | the agent writes it into your folder and tests it on copies before you run it | you copy it from the chat and save it yourself |
+| When it fails | the agent reads the error itself | you copy the error back into the chat |
+| Next time | loads by itself when a chore comes up | you paste the prompt again |
+| You need | Claude Code or Codex | nothing to install |
+
+## Use the prompt (any AI chat, nothing to install)
 
 1. Open [PROMPT.md](PROMPT.md), copy everything in it.
 2. Open the AI chat you already use (ChatGPT, Claude, Copilot, Gemini) and start a new chat.
@@ -47,31 +77,16 @@ On a Mac it's a small app you save from Script Editor (it comes with every Mac).
 
 ## For developers
 
-There are two versions of the same method:
+- **Layout:** the skill is [`skills/alreadythere/`](skills/alreadythere/) ([`SKILL.md`](skills/alreadythere/SKILL.md) plus its tested examples); [`.claude-plugin/`](.claude-plugin/) makes the repo a Claude Code plugin marketplace; [`PROMPT.md`](PROMPT.md) is the chat version.
+- **Manual install:** copy `skills/alreadythere/` into `~/.claude/skills/` (Claude Code) or `~/.agents/skills/` (Codex).
+- **No install:** tell the agent "Read https://github.com/JohnSchweden/alreadythere/blob/main/skills/alreadythere/SKILL.md and follow it for this task:" and add your chore.
 
-- [`PROMPT.md`](PROMPT.md) is for a person in a plain AI chat. The AI can't see the computer, so it asks, and the person never types a command.
-- [`SKILL.md`](SKILL.md) is for an agent with a terminal (Claude Code, Codex and others that read `SKILL.md`). The agent checks the installed tools itself, writes the script, tests it on copies and teaches you what it does.
-
-**Install the skill:**
-
-```sh
-# Claude Code
-git clone https://github.com/JohnSchweden/alreadythere ~/.claude/skills/alreadythere
-# Codex
-git clone https://github.com/JohnSchweden/alreadythere ~/.agents/skills/alreadythere
-```
-
-Then describe your chore. Claude Code picks the skill up from the task, or call it with `/alreadythere`; in Codex use `$alreadythere`.
-
-**No install:** tell the agent "Read https://github.com/JohnSchweden/alreadythere/blob/main/SKILL.md and follow it for this task:" and add your chore.
-
-
-- **Tested examples** in [examples/](examples/):
+- **Tested examples** in [examples/](skills/alreadythere/examples/):
 
 | Task | Mac | Windows |
 |---|---|---|
-| [Merge PDFs](examples/merge-pdfs/) | double-click app (AppleScript), tested; shell version, tested | Windows has no built-in PDF merger; Word can |
-| [Resize photos](examples/resize-photos/) | shell version, tested | PowerShell version, not yet tested on Windows |
+| [Merge PDFs](skills/alreadythere/examples/merge-pdfs/) | double-click app (AppleScript), tested; shell version, tested | Windows has no built-in PDF merger; Word can |
+| [Resize photos](skills/alreadythere/examples/resize-photos/) | shell version, tested | PowerShell version, not yet tested on Windows |
 
 Mac scripts were tested on macOS 27 with no Homebrew and no Python on the path, using only tools that ship with macOS.
 

@@ -1,0 +1,8 @@
+{
+  "name": "alreadythere",
+  "description": "Solve file and office chores with a small script that uses only tools already on your Mac or Windows computer, and learn how it works.",
+  "version": "1.0.0",
+  "author": { "name": "JohnSchweden" },
+  "license": "MIT",
+  "skills": ["./skills/alreadythere"]
+}

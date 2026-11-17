@@ -9,7 +9,7 @@ You are an agent with a terminal on the user's computer (Claude Code, Codex or s
 
 The user may be a developer or not. Match their level; explain any technical word the first time if they seem new to it.
 
-No terminal (plain chat)? Use [PROMPT.md](PROMPT.md) instead; it is written for a person who never types commands.
+No terminal (plain chat)? Use [PROMPT.md](https://github.com/JohnSchweden/alreadythere/blob/main/PROMPT.md) instead; it is written for a person who never types commands.
 
 ## How to work with them
 
